@@ -30,3 +30,9 @@
 #Mac
 .DS_Store
 /.recommenders/
+
+#Other
+**/.*.swp
+**/*.class
+**/*.sh
+**/jlist
