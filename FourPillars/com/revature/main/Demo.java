@@ -1,10 +1,16 @@
 package com.revature.main;
 import com.revature.hominidae.*;
-
 public class Demo {
 	//print method wrapper for readability
 	public static void print(Object obj) {
 		System.out.println(obj);
+	}
+
+	//checks if object of type Homininae belongs to abstract class Homini
+	//no purpose to this method other than it demonstrates checked Exception
+	public static void checkedExceptionDemo(Homininae h) throws TypeException {
+		if(!(h instanceof Homini))
+			throw new TypeException("wrong kind of hominin");
 	}
 	public static void main(String[] args) {
 		
@@ -19,6 +25,12 @@ public class Demo {
 		Homininae habilis = new Homo();
 		Homininae erectus = new Homo();
 
+		try {
+			checkedExceptionDemo((Gorillini)gorilla);
+		}
+		catch(TypeException e) {
+			e.printStackTrace();
+		}
 		try {
 			sapiens2.setSex('x'); //set bogus exception
 		}
