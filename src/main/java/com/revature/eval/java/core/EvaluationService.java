@@ -15,7 +15,11 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		String stringRev = "";
+		for(int i=string.length()-1; i>=0; i--) {
+			stringRev += string.charAt(i);
+		}
+		return stringRev;
 	}
 
 	/**
@@ -81,18 +85,16 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			return (sideOne == sideTwo) && (sideTwo == sideThree);
 		}
 
+
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			return (sideOne == sideTwo) || (sideOne == sideThree);
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			return (sideOne != sideTwo) && (sideTwo != sideThree);
 		}
 
 	}
@@ -318,6 +320,7 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
+      // 
 			return null;
 		}
 
