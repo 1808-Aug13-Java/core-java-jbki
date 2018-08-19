@@ -391,7 +391,7 @@ public class EvaluationServiceTest {
 
 	@Test
 	public void testProductOfPrimes() {
-		assertEquals(Arrays.asList(5L, 17L, 23L, 461L), evaluationService.calculatePrimeFactorsOf(3L));
+		assertEquals(Arrays.asList(5L, 17L, 23L, 461L), evaluationService.calculatePrimeFactorsOf(901255L));
 	}
 
 	/*******************************************************************

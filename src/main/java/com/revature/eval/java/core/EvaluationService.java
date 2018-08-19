@@ -362,32 +362,24 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-      ArrayList<Long> primes = new ArrayList<Long>();
-
-      primes.add(2);
-      primes.add(3);
-      int temp = 3;
-      while(primes.size() < i) {
-        if(isPrime(temp, primes))
-        {
-          primes.add(temp);
-          temp = primes.get(primes.size()-1);
-        }
-        temp += 2;
-      }
-      return primes.get(primes.size()-1);
-      }
-
-      static boolean isPrime(int n, List<Integer> primes) {
-      for(int p : primes) {
-        if(n % p == 0) {
-          return false;
-        }
-      }
-      return true;
-    return null;
+      ArrayList<Long> factors = new ArrayList<Long>();
+      return divide(l, 2, factors);
 	}
-
+  public  ArrayList<Long> divide(long a, long b, ArrayList<Long> factors) {     
+     
+    if(b == a) {     
+      //print(b);     
+      factors.add(b);     
+      return factors;     
+    }     
+    else if(a%b==0) {     
+      factors.add(b);     
+      return divide(a/b, b, factors);     
+    }     
+    else {     
+      return divide(a, b+1, factors);     
+    }     
+  }   
 	/**
 	 * 11. Create an implementation of the rotational cipher, also sometimes called
 	 * the Caesar cipher.
@@ -414,21 +406,38 @@ public class EvaluationService {
 	 * gur ynml qbt. ROT13 Gur dhvpx oebja sbk whzcf bire gur ynml qbt. gives The
 	 * quick brown fox jumps over the lazy dog.
 	 */
-	static class RotationalCipher {
-		private int key;
+    static class RotationalCipher {
+    private int key;
 
-		public RotationalCipher(int key) {
-			super();
-			this.key = key;
-		}
+    public RotationalCipher(int key) {
+      super();
+      this.key = key;
+    }
 
-		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-      // 
-			return null;
-		}
+    public String rotate(String string) {
+      // TODO Write an implementation for this method declaration
+      //
+      char[] chars = string.toCharArray();
+      String cipher = "";
+      for(char c : chars) {
+        char cc = c;
+        if(Character.isLetter(c)) {
+          if(Character.isUpperCase(c)) {
+            int code = (int)c - 65;
+            cc = (char)(((code+key) % 26) + 65);
+          }
+          else {
+            int code = (int)c - 97;
+            cc = (char)(((code+key) % 26) + 97);
+          }
+        }
+        cipher = cipher.concat(Character.toString(cc));
+      }
+      return cipher;
+    }
 
-	}
+  }
+
 
 	/**
 	 * 12. Given a number n, determine what the nth prime is.
@@ -497,17 +506,64 @@ public class EvaluationService {
 	 *
 	 */
 	static class AtbashCipher {
+    public static HashMap<Character, Character> key = new HashMap<Character, Character>();
+    static {
+      key.put('a', 'z');
+      key.put('b', 'y');
+      key.put('c', 'x');
+      key.put('d', 'w');
+      key.put('e', 'v');
+      key.put('f', 'u');
+      key.put('g', 't');
+      key.put('h', 's');
+      key.put('i', 'r');
+      key.put('j', 'q');
+      key.put('k', 'p');
+      key.put('l', 'o');
+      key.put('m', 'n');
+      key.put('n', 'm');
+      key.put('o', 'l');
+      key.put('p', 'k');
+      key.put('q', 'j');
+      key.put('r', 'i');
+      key.put('s', 'h');
+      key.put('t', 'g');
+      key.put('u', 'f');
+      key.put('v', 'e');
+      key.put('w', 'd');
+      key.put('x', 'c');
+      key.put('y', 'b');
+      key.put('z', 'a');
+    }
+    /**
+     * Question 13
+     * 
+     * @param string
+     * @return
+     */
+    public static String encode(String string) {
+      // TODO Write an implementation for this method declaration
+      string = string.toLowerCase().replaceAll(" ", "");
+      String encoding = "";
+      for(char c : string.toCharArray()) {
+        char cipher = c;
+        if(key.containsKey(c)) {
+          cipher = key.get(c);
+          encoding += Character.toString(cipher);
+        }
+      }
 
-		/**
-		 * Question 13
-		 * 
-		 * @param string
-		 * @return
-		 */
-		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
-		}
+      String temp = encoding;
+      encoding = "";
+      for(int i=0; i<temp.length(); i++)
+      {
+        if(i % 5 == 0) 
+          encoding += " ";
+        encoding += Character.toString(temp.charAt(i));
+      }
+      return encoding.trim();
+    }
+
 
 		/**
 		 * Question 14
