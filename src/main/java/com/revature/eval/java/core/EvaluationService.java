@@ -1,7 +1,7 @@
 package com.revature.eval.java.core;
-
-import java.time.temporal.Temporal;
 import java.util.*;
+import java.time.*;
+import java.time.temporal.*;
 
 public class EvaluationService {
   
@@ -535,6 +535,35 @@ public class EvaluationService {
       key.put('y', 'b');
       key.put('z', 'a');
     }
+    public static HashMap<Character, Character> decodeKey = new HashMap<Character, Character>();
+    static {
+      decodeKey.put('z','a') ;
+      decodeKey.put('y','b') ;
+      decodeKey.put('x','c') ;
+      decodeKey.put('w','d') ;
+      decodeKey.put('v','e') ;
+      decodeKey.put('u','f') ;
+      decodeKey.put('t','g') ;
+      decodeKey.put('s','h') ;
+      decodeKey.put('r','i') ;
+      decodeKey.put('q','j') ;
+      decodeKey.put('p','k') ;
+      decodeKey.put('o','l') ;
+      decodeKey.put('n','m') ;
+      decodeKey.put('m','n') ;
+      decodeKey.put('l','o') ;
+      decodeKey.put('k','p') ;
+      decodeKey.put('j','q') ;
+      decodeKey.put('i','r') ;
+      decodeKey.put('h','s') ;
+      decodeKey.put('g','t') ;
+      decodeKey.put('f','u') ;
+      decodeKey.put('e','v') ;
+      decodeKey.put('d','w') ;
+      decodeKey.put('c','x') ;
+      decodeKey.put('b','y') ;
+      decodeKey.put('a','z') ;
+    }
     /**
      * Question 13
      * 
@@ -572,8 +601,18 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+      //constraints: must be lower case, white space after every 5 characters
+      String msg = "";
+      for(char c : string.toCharArray()) {
+        if(c == ' ') //skip spaces
+          continue;
+        if(decodeKey.containsKey(c))
+          msg += decodeKey.get(c);
+        else
+          msg += c;
+      }
+
+			return msg;
 		}
 	}
 
@@ -656,8 +695,12 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
+    Duration dur = Duration.ofSeconds(1000000000);
+    if(given instanceof LocalDateTime)
+      return given.plus(dur);
+    LocalDateTime givenDateTime = LocalDateTime.of((LocalDate)given, LocalTime.of(0,0,0));
+    givenDateTime = givenDateTime.plus(dur);
+		return givenDateTime;
 	}
 
 	/**
