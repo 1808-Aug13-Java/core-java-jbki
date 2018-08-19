@@ -9,7 +9,7 @@
 **/pull_request_template.md
 **/issue_template.md
 **/target/
-**/bin/
+**/bin/**
 **/META-INF/**
 
 #Eclipse
