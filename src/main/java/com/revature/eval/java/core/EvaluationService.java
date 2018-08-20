@@ -266,6 +266,16 @@ public class EvaluationService {
 
     public int indexOf(T t) {
       // TODO Write an implementation for this method declaration
+      int limit_up=0;
+
+      int limit_down = sortedList.length-1;
+      int target = 0;
+      while(t != target) {
+        if(t > target) 
+          limit_up = sortedList.indexOf(target);
+          target = round(
+        }
+      }
       return sortedList.indexOf(t);
     }
 
