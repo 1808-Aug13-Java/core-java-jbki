@@ -45,19 +45,47 @@ public class Bank {
     }
     reader.close();
   }
-  public static boolean verify(String u, String p) {
-    
-    return true;
+  public static boolean verify(String u, char[] p) {
+    //u = username; p = password
+    BufferedReader reader;
+    try {
+      //username checking
+      File userAccount = new File(u); 
+      if(!userAccount.exists()) throw new FileNotFoundException();
+
+      //password checking
+      reader = new BufferedReader(new FileReader(userAccount));
+      Scanner pwdScanner = new Scanner(userAccount);
+      String line = "";
+      do {
+        line = pwdScanner.nextLine();
+        if(line.contains("password")) {
+          line = line.replace("password: ", ""); //extract value password
+          if(line.equals(new String(p))) {
+            return true; 
+          }
+        }
+      } 
+      while(pwdScanner.hasNextLine());
+      
+    }
+    catch(FileNotFoundException e) {
+      System.out.print("Wrong username or password");
+      return false;
+    }
+    return false;
   }
   static String createUsername(String msg) {
     Console c = System.console();
     return c.readLine(msg);
   }
 //TODO throw username taken error
-  static String createPassword(String msg) {
+  static char[] createPassword(String msg) {
     Console c = System.console();
     System.out.println(msg);
-    return c.readPassword().toString();
+    char[] pwd = c.readPassword();
+    System.out.println(pwd);
+    return pwd;
   }
   static boolean usernameTaken(String username, String msg) {
     boolean taken = false;
@@ -72,10 +100,10 @@ public class Bank {
     Console c = System.console();
     return c.readLine(msg);
   }
-  static String getPassword(String msg) {
+  static char[] getPassword(String msg) {
     Console c = System.console();
     System.out.println(msg);
-    return c.readPassword().toString();
+    return c.readPassword();
   }
 
   static void showTransactionsMenu() {

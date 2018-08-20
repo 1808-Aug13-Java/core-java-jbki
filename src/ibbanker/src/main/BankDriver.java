@@ -1,14 +1,15 @@
 package main;
 import java.util.Scanner;
-import java.util.*;
 import java.io.Console;
 import java.io.File;
-import java.io.*;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.nio.file.*;
 import java.nio.*;
-import java.nio.file.StandardOpenOption;
-import main.Bank.*;
 class NegativeFloatException extends RuntimeException {}
 public class BankDriver {
   public static void main(String ... args) {
@@ -16,7 +17,7 @@ public class BankDriver {
     while(true) {
       Console c = System.console();
       String username = "";
-      String password = "";
+      char[] password = null;
       System.out.println("1. First time login");
       System.out.println("2. Login");
       System.out.println("3. exit");
@@ -27,13 +28,15 @@ public class BankDriver {
                   username = Bank.createUsername(Bank.CREATE_USR);
                 } while(Bank.usernameTaken(username, Bank.USR_TAKEN));
                 password = Bank.createPassword(Bank.CREATE_PWD);
-                
+
                 try {
                   File file = new File(username);
                   file.createNewFile();
                   BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                   writer.write("username: " + username.toString() + '\n');
-                  writer.write("password: " + password + '\n');
+                  writer.write("password: ");
+                  writer.write(password);
+                  writer.write('\n');
                   writer.write("balance: " + "0" + '\n');
                   writer.close();
                 }
@@ -48,10 +51,12 @@ public class BankDriver {
                username = Bank.getUsername(Bank.GET_USR); 
                password = Bank.getPassword(Bank.GET_PWD); 
                // username = "jbki";
+
                // System.out.println("");
                 //catch bad login attempts
                 if(!(Bank.verify(username, password))) {
                   System.out.println("login failed");
+                  continue; //go back to main menu if wrong stuff
                 }
 
                 //logged in, show menu 
@@ -68,9 +73,8 @@ public class BankDriver {
                           Bank.deposit(file, amount);
                           break;
                         case 2:
-                          do {
-                            amount = Float.parseFloat(c.readLine(Bank.WITHDRAW_AMT));
-                          } while(!Bank.withdraw(file, amount));
+                          amount = Float.parseFloat(c.readLine(Bank.WITHDRAW_AMT));
+                          Bank.withdraw(file, amount);
                           break;
                         case 3:
                           Bank.view(file);
@@ -91,6 +95,7 @@ public class BankDriver {
                       e.printStackTrace();
                     }
                   }
+                  break;
         case 3: 
           System.out.println("bye");
           System.exit(0);
