@@ -263,20 +263,29 @@ public class EvaluationService {
    */
   static class BinarySearch<T> {
     private List<T> sortedList;
+    
+    public int indexOf(T target) {
+      int limit_down=0;
+      int limit_up = sortedList.size()-1;
+      int curIdx = ((limit_down + limit_up)/2) + 1;
+      T curVal = sortedList.get(curIdx);
 
-    public int indexOf(T t) {
-      // TODO Write an implementation for this method declaration
-      int limit_up=0;
-
-      int limit_down = sortedList.length-1;
-      int target = 0;
-      while(t != target) {
-        if(t > target) 
-          limit_up = sortedList.indexOf(target);
-          target = round(
+      while(curVal != target) {
+        Integer iCurVal = Integer.parseInt(curVal.toString());
+        if(iCurVal.compareTo(new Integer(target.toString())) > 0) {
+          limit_up = curIdx; 
+          curIdx = ((limit_down + limit_up)/2) ;
+        }
+        else if (iCurVal.compareTo(new Integer(target.toString())) < 0) {
+          limit_down = curIdx;
+          curIdx = ((limit_down + limit_up)/2) ;
+        }
+        else {
+          System.out.println("HEYO");
+          System.exit(2);
         }
       }
-      return sortedList.indexOf(t);
+      return curIdx;
     }
 
     public BinarySearch(List<T> sortedList) {

@@ -18,21 +18,26 @@ public class BankDriver {
       Console c = System.console();
       String username = "";
       char[] password = null;
+      //Show menu 1 (pre-login/splash screen)
       System.out.println("1. First time login");
       System.out.println("2. Login");
       System.out.println("3. exit");
+      
+      //get user selection
       int select = Integer.parseInt(c.readLine());
       switch (select) {
         case 1: 
+                //TODO: getting username 
                 do {
                   username = Bank.createUsername(Bank.CREATE_USR);
                 } while(Bank.usernameTaken(username, Bank.USR_TAKEN));
                 password = Bank.createPassword(Bank.CREATE_PWD);
 
                 try {
+                  //TODO: attempt to create user account
                   File file = new File(username);
                   file.createNewFile();
-                  BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                  BufferedWriter writer = new BufferedWriter(new FileWriter(file)); //catch IOException for FileWriter
                   writer.write("username: " + username.toString() + '\n');
                   writer.write("password: ");
                   writer.write(password);
@@ -40,7 +45,7 @@ public class BankDriver {
                   writer.write("balance: " + "0" + '\n');
                   writer.close();
                 }
-                catch(FileNotFoundException e) {
+                catch(FileNotFoundException e) { //if problem with FileReader (where?) 
                   e.printStackTrace();
                 }
                 catch(Exception e) {
