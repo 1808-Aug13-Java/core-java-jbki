@@ -29,10 +29,11 @@ alias second= create table invoice (
 --Customer id in the invoice table should make a reference to the customer id in the customer table
 --Insert at least 50 records into your invoice table and at least 10 records into your customer table
 --Create a query which shows purchases that occured today
+select * from invoice where invoicedate = current_date;
 --Create a query which shows each customer and the number of purchases made by each
 select count(*) from invoice, customer;
 --Create a query which shows each customer and the total cost of all their purchases
-
+select sum(total) as t from invoice, customer group by invoice.customerid order by t;
 --Create a query which returns all purchases which took place in the last month, display them in descending order
 --Create a query which show the top three most expensive purchases
 
